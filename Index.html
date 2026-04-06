@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Signal Strength Inc - DStv & GOtv</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: #f0f2f5;
+            color: #1a1a1a;
+            padding-bottom: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .service-selector {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin: 30px 0 20px;
+        }
+
+        .service-selector button {
+            padding: 10px 24px;
+            font-size: 1rem;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .service-selector button.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .packages {
+            display: none;
+        }
+
+        .packages.active {
+            display: block;
+        }
+
+        .packages h2 {
+            text-align: center;
+            margin: 20px 0;
+            color: #333;
+            font-size: 1.5rem;
+        }
+
+        .package-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .package {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 2px solid #e0e0e0;
+        }
+
+        .package.selected {
+            border-color: #667eea;
+            background: #f0f2ff;
+        }
+
+        .package h3 {
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+        }
+
+        .package p {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .package button {
+            margin-top: 10px;
+            padding: 6px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .order-form {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .order-form h2 {
+            margin-bottom: 16px;
+            font-size: 1.3rem;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .payment-instructions {
+            background: #f8f9fa;
+            padding: 16px;
+            border-radius: 12px;
+            margin: 16px 0;
+            border-left: 4px solid #28a745;
+        }
+
+        .payment-instructions h3 {
+            margin-bottom: 10px;
+            color: #28a745;
+            font-size: 1.1rem;
+        }
+
+        .payment-instructions p {
+            margin: 6px 0;
+            font-size: 0.95rem;
+        }
+
+        .bank-details {
+            background: #fff3cd;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        footer {
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 20px;
+        }
+
+        footer p {
+            margin: 5px 0;
+            font-size: 0.85rem;
+        }
+
+        .admin-link {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #667eea;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .success-msg {
+            background: #d4edda;
+            color: #155724;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 10px 0;
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .package-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            header h1 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <h1>📡 SIGNAL STRENGTH INC</h1>
+        <p>Your Trusted DStv & GOtv Reseller</p>
+    </div>
+</header>
+
+<main class="container">
+    <div class="service-selector">
+        <button id="dstvBtn" class="active">📺 DStv</button>
+        <button id="gotvBtn">📡 GOtv</button>
+    </div>
+
+    <!-- DStv Packages -->
+    <div id="dstvPackages" class="packages active">
+        <h2>DStv Packages</h2>
+        <div class="package-grid">
+            <div class="package" data-service="dstv" data-code="PREM" data-price="37000" data-name="Premium">
+                <h3>Premium</h3>
+                <p>₦37,000</p>
+                <button>Select</button>
+            </div>
+            <div class="package" data-service="dstv" data-code="COMP" data-price="29500" data-name="Compact Plus">
+                <h3>Compact Plus</h3>
+                <p>₦29,500</p>
+                <button>Select</button>
+            </div>
+            <div class="package" data-service="dstv" data-code="CMPT" data-price="19500" data-name="Compact">
+                <h3>Compact</h3>
+                <p>₦19,500</p>
+                <button>Select</button>
+            </div>
+            <div class="package" data-service="dstv" data-code="FAM" data-price="11500" data-name="Family">
+                <h3>Family</h3>
+                <p>₦11,500</p>
+                <button>Select</button>
+            </div>
+            <div class="package" data-service="dstv" data-code="LITE" data-price="6500" data-name="Lite">
+                <h3>Lite</h3>
+                <p>₦6,500</p>
+                <button>Select</button>
+            </div>
+            <div class="package" data-service="dstv" data-code="YDVB" data-price="4500" data-name="Yanga">
+                <h3>Yanga</h3>
+                <p>₦4,500</p>
+                <button>Select</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- GOtv Packages -->
+    <div id="gotvPackages" class="packages">
+        <h2>GOtv Packages</h2>
+        <div class="package-grid">
+            <div class="package" data-service="gotv" data-code="SUP" data-price="18500" data-name="Super+">
+                <h3>Super+</h3>
+                <p>₦18,500</p>
+                <button>Select</button>
+            </div>
+            <div class="package" data-service="gotv" data-code="MAX" data-price="13200" data-name="Max">
+                <h3>Max</h3>
+                <p>₦13,200</p>
+                <button>Select</button>
+            </div>
+            <div class="package" data-service="gotv" data-code="JIN" data-price="8400" data-name="Jinja">
+                <h3>Jinja</h3>
+                <p>₦8,400</p>
+                <button>Select</button>
+            </div>
+            <div class="package" data-service="gotv" data-code="SML" data-price="5100" data-name="Smallie">
+                <h3>Smallie</h3>
+                <p>₦5,100</p>
+                <button>Select</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Form -->
+    <div class="order-form" id="orderForm" style="display: none;">
+        <h2>📝 Complete Your Order</h2>
+        <div class="success-msg" id="successMsg"></div>
+        <form id="paymentForm">
+            <div class="form-group">
+                <label>Selected Package:</label>
+                <input type="text" id="selectedPackage" readonly style="background:#f5f5f5;">
+            </div>
+            <div class="form-group">
+                <label>Amount (₦):</label>
+                <input type="text" id="amount" readonly style="background:#f5f5f5;">
+            </div>
+            <div class="form-group">
+                <label for="smartcard">Smartcard/IUC Number:</label>
+                <input type="text" id="smartcard" required placeholder="e.g., 1234567890">
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" required placeholder="0803 123 4567">
+            </div>
+            <div class="form-group">
+                <label for="email">Email (optional):</label>
+                <input type="email" id="email" placeholder="you@example.com">
+            </div>
+            <div class="payment-instructions">
+                <h3>💳 Payment Instructions</h3>
+                <div class="bank-details">
+                    <p><strong>Send payment to:</strong></p>
+                    <p>🏦 Bank: <strong>OPAY</strong><br>
+                    📛 Account Name: <strong>Olowookere David Ayomide</strong><br>
+                    🔢 Account Number: <strong>7079197823</strong></p>
+                </div>
+                <p>💰 <strong>Amount to pay:</strong> <span id="payAmount">₦0</span></p>
+                <p>✅ After payment, click <strong>Submit Order</strong> below.</p>
+                <p>📱 You'll receive a WhatsApp confirmation immediately.</p>
+            </div>
+            <button type="submit" class="submit-btn">📝 Submit Order</button>
+        </form>
+    </div>
+</main>
+
+<footer>
+    <div class="container">
+        <p>© 2024 Signal Strength Inc - Fast & Reliable DStv/GOtv Renewals</p>
+        <p>📞 Contact: <strong>07079197823</strong> | 💬 WhatsApp: <strong>07079197823</strong></p>
+    </div>
+</footer>
+
+<a href="#" class="admin-link" id="adminLink">🔐 Admin</a>
+
+<script>
+    // ========== YOUR DETAILS - ALREADY CONFIGURED ==========
+    const YOUR_WHATSAPP_NUMBER = '2347079197823';  // Your WhatsApp number
+    const ADMIN_PASSWORD = 'signal123';            // Change this password after deployment
+    // =======================================================
+
+    let selectedPackage = null;
+
+    // Package selection
+    document.querySelectorAll('.package').forEach(pkg => {
+        pkg.addEventListener('click', (e) => {
+            if(e.target.tagName === 'BUTTON') {
+                e.stopPropagation();
+            }
+            document.querySelectorAll('.package').forEach(p => p.classList.remove('selected'));
+            pkg.classList.add('selected');
+            selectedPackage = {
+                name: pkg.dataset.name,
+                price: pkg.dataset.price,
+                service: pkg.dataset.service,
+                code: pkg.dataset.code
+            };
+            
+            // Show order form
+            document.getElementById('orderForm').style.display = 'block';
+            document.getElementById('selectedPackage').value = `${selectedPackage.service.toUpperCase()} - ${selectedPackage.name}`;
+            document.getElementById('amount').value = `₦${parseInt(selectedPackage.price).toLocaleString()}`;
+            document.getElementById('payAmount').innerText = `₦${parseInt(selectedPackage.price).toLocaleString()}`;
+            
+            // Scroll to form
+            document.getElementById('orderForm').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        pkg.querySelector('button').addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.querySelectorAll('.package').forEach(p => p.classList.remove('selected'));
+            pkg.classList.add('selected');
+            selectedPackage = {
+                name: pkg.dataset.name,
+                price: pkg.dataset.price,
+                service: pkg.dataset.service,
+                code: pkg.dataset.code
+            };
+            
+            document.getElementById('orderForm').style.display = 'block';
+            document.getElementById('selectedPackage').value = `${selectedPackage.service.toUpperCase()} - ${selectedPackage.name}`;
+            document.getElementById('amount').value = `₦${parseInt(selectedPackage.price).toLocaleString()}`;
+            document.getElementById('payAmount').innerText = `₦${parseInt(selectedPackage.price).toLocaleString()}`;
+            
+            document.getElementById('orderForm').scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+
+    // Service toggle
+    document.getElementById('dstvBtn').addEventListener('click', () => {
+        document.getElementById('dstvBtn').classList.add('active');
+        document.getElementById('gotvBtn').classList.remove('active');
+        document.getElementById('dstvPackages').classList.add('active');
+        document.getElementById('gotvPackages').classList.remove('active');
+        document.getElementById('orderForm').style.display = 'none';
+        selectedPackage = null;
+    });
+
+    document.getElementById('gotvBtn').addEventListener('click', () => {
+        document.getElementById('gotvBtn').classList.add('active');
+        document.getElementById('dstvBtn').classList.remove('active');
+        document.getElementById('gotvPackages').classList.add('active');
+        document.getElementById('dstvPackages').classList.remove('active');
+        document.getElementById('orderForm').style.display = 'none';
+        selectedPackage = null;
+    });
+
+    // Form submission
+    document.getElementById('paymentForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        if(!selectedPackage) {
+            alert('Please select a package first');
+            return;
+        }
+        
+        const smartcard = document.getElementById('smartcard').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const email = document.getElementById('email').value.trim();
+        
+        if(!smartcard || smartcard.length < 10) {
+            alert('Please enter a valid smartcard/IUC number (10-11 digits)');
+            return;
+        }
+        
+        if(!phone || phone.length < 10) {
+            alert('Please enter a valid phone number');
+            return;
+        }
+        
+        // Create order
+        const orderId = 'ORD-' + Date.now();
+        const order = {
+            id: orderId,
+            date: new Date().toLocaleString(),
+            service: selectedPackage.service,
+            package: selectedPackage.name,
+            code: selectedPackage.code,
+            smartcard: smartcard,
+            amount: selectedPackage.price,
+            phone: phone,
+            email: email,
+            status: 'pending'
+        };
+        
+        // Save to localStorage
+        let orders = JSON.parse(localStorage.getItem('signalStrengthOrders') || '[]');
+        orders.unshift(order);
+        localStorage.setItem('signalStrengthOrders', JSON.stringify(orders));
+        
+        // Send WhatsApp message to YOU
+        const msg = `*NEW ORDER - SIGNAL STRENGTH INC*%0A%0A` +
+            `🆔 Order ID: ${orderId}%0A` +
+            `📅 Date: ${order.date}%0A` +
+            `📺 Service: ${order.service.toUpperCase()}%0A` +
+            `📦 Package: ${order.package}%0A` +
+            `🔢 Smartcard: ${order.smartcard}%0A` +
+            `💰 Amount: ₦${parseInt(order.amount).toLocaleString()}%0A` +
+            `📞 Customer Phone: ${order.phone}%0A` +
+            `📧 Customer Email: ${order.email || 'Not provided'}%0A%0A` +
+            `✅ CUSTOMER WILL PAY TO YOUR OPAY ACCOUNT (Olowookere David Ayomide - 7079197823)%0A%0A` +
+            `🔐 To mark as paid, go to Admin panel (tap purple button bottom right)%0A` +
+            `🔗 Admin: ${window.location.href.split('?')[0]}?admin=1`;
+        
+        // Open WhatsApp to YOU
+        window.open(`https://wa.me/${YOUR_WHATSAPP_NUMBER}?text=${msg}`, '_blank');
+        
+        // Show success message
+        document.getElementById('successMsg').style.display = 'block';
+        document.getElementById('successMsg').innerHTML = `✅ Order placed successfully!<br><br>🆔 Order ID: ${orderId}<br>💰 Amount: ₦${parseInt(order.amount).toLocaleString()}<br><br>📌 Please send payment to:<br><strong>OPAY - Olowookere David Ayomide - 7079197823</strong><br><br>After payment, you will receive confirmation on WhatsApp.`;
+        
+        // Reset form after delay
+        setTimeout(() => {
+            document.getElementById('smartcard').value = '';
+            document.getElementById('phone').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('orderForm').style.display = 'none';
+            document.querySelectorAll('.package').forEach(p => p.classList.remove('selected'));
+            selectedPackage = null;
+            document.getElementById('successMsg').style.display = 'none';
+        }, 5000);
+        
+        alert(`✅ Order placed!\n\nOrder ID: ${orderId}\nAmount: ₦${parseInt(order.amount).toLocaleString()}\n\nSend payment to:\nOPAY - Olowookere David Ayomide - 7079197823\n\nYou'll get WhatsApp confirmation shortly.`);
+    });
+    
+    // Admin panel
+    function showAdmin() {
+        const password = prompt('Enter admin password:');
+        if(password !== ADMIN_PASSWORD) {
+            alert('Wrong password');
+            return;
+        }
+        
+        const orders = JSON.parse(localStorage.getItem('signalStrengthOrders') || '[]');
+        if(orders.length === 0) {
+            alert('No orders yet');
+            return;
+        }
+        
+        let adminHtml = '<div style="position:fixed;top:0;left:0;right:0;bottom:0;background:white;z-index:9999;overflow:auto;padding:20px;">';
+        adminHtml += '<div style="max-width:1200px;margin:0 auto;">';
+        adminHtml += '<h2>📊 SIGNAL STRENGTH INC - ORDERS</h2>';
+        adminHtml += '<button onclick="location.reload()" style="padding:8px 16px;margin:10px 0;background:#667eea;color:white;border:none;border-radius:8px;">❌ Close Admin</button>';
+        adminHtml += '<div style="overflow-x:auto;">';
+        adminHtml += '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+        adminHtml += '<tr style="background:#667eea;color:white;"><th style="padding:10px;">Order ID</th><th style="padding:10px;">Date</th><th style="padding:10px;">Service</th><th style="padding:10px;">Package</th><th style="padding:10px;">Smartcard</th><th style="padding:10px;">Amount</th><th style="padding:10px;">Customer Phone</th><th style="padding:10px;">Status</th><th style="padding:10px;">Action</th></tr>';
+        
+        orders.forEach((order, index) => {
+            adminHtml += `<tr style="border-bottom:1px solid #ddd;">
+                <td style="padding:10px;">${order.id}</td>
+                <td style="padding:10px;">${order.date}</td>
+                <td style="padding:10px;">${order.service.toUpperCase()}</td>
+                <td style="padding:10px;">${order.package}</td>
+                <td style="padding:10px;">${order.smartcard}</td>
+                <td style="padding:10px;">₦${parseInt(order.amount).toLocaleString()}</td>
+                <td style="padding:10px;">${order.phone}</td>
+                <td style="padding:10px;"><span style="background:${order.status === 'paid' ? '#28a745' : '#ffc107'};color:${order.status === 'paid' ? 'white' : 'black'};padding:4px 8px;border-radius:4px;">${order.status}</span></td>
+                <td style="padding:10px;">${order.status !== 'paid' ? `<button onclick="markPaid(${index})" style="background:#28a745;color:white;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;">✅ Mark as Paid</button>` : '✅ Completed'}</td>
+             </tr>`;
+        });
+        
+        adminHtml += '</table></div></div></div>';
+        
+        const overlay = document.createElement('div');
+        overlay.innerHTML = adminHtml;
+        document.body.appendChild(overlay);
+        
+        window.markPaid = function(index) {
+            let orders = JSON.parse(localStorage.getItem('signalStrengthOrders') || '[]');
+            orders[index].status = 'paid';
+            localStorage.setItem('signalStrengthOrders', JSON.stringify(orders));
+            alert(`✅ Order ${orders[index].id} marked as PAID!\n\nNow manually renew their decoder:\n${orders[index].service.toUpperCase()} - ${orders[index].package}\nSmartcard: ${orders[index].smartcard}\n\nAfter renewal, message customer on ${orders[index].phone}`);
+            location.reload();
+        };
+    }
+    
+    // Admin link click
+    document.getElementById('adminLink').addEventListener('click', (e) => {
+        e.preventDefault();
+        showAdmin();
+    });
+    
+    // Check for admin in URL
+    if(window.location.href.includes('admin=1')) {
+        showAdmin();
+    }
+</script>
+
+</body>
+</html>
