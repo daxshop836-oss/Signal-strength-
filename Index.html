@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Signal Strength Inc - DStv & GOtv</title>
+    <title>Signal Strength Inc - Instant DStv & GOtv Renewal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -12,373 +14,1019 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-            background: #f0f2f5;
-            color: #1a1a1a;
-            padding-bottom: 20px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9edf2 100%);
+            color: #1a1a2e;
+            scroll-behavior: smooth;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(102,126,234,0.08) 0%, rgba(118,75,162,0.05) 100%);
+            animation: bgMove 20s ease-in-out infinite;
+        }
+
+        @keyframes bgMove {
+            0%, 100% { transform: translate(-10%, -10%) rotate(0deg); }
+            50% { transform: translate(10%, 10%) rotate(5deg); }
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 0 16px;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
         }
 
+        /* Header */
         header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 30px 0;
+            padding: 60px 0 80px;
             text-align: center;
+            border-radius: 0 0 40px 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 250px;
+            height: 250px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(10deg); }
+        }
+
+        .logo {
+            font-size: 3rem;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 2;
         }
 
         header h1 {
-            font-size: 1.8rem;
-            margin-bottom: 8px;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 2;
+            letter-spacing: -0.5px;
         }
 
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            position: relative;
+            z-index: 2;
+        }
+
+        .trust-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 20px;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 12px 24px;
+            border-radius: 50px;
+            margin-top: 24px;
+            font-size: 0.85rem;
+        }
+
+        /* Service Selector */
         .service-selector {
             display: flex;
-            gap: 12px;
+            gap: 16px;
             justify-content: center;
-            margin: 30px 0 20px;
+            margin: -30px 0 30px;
+            position: relative;
+            z-index: 10;
         }
 
         .service-selector button {
-            padding: 10px 24px;
+            padding: 14px 36px;
             font-size: 1rem;
-            border: 2px solid #667eea;
+            border: none;
             background: white;
             color: #667eea;
-            border-radius: 50px;
+            border-radius: 60px;
             cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
+            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .service-selector button i {
+            font-size: 1.2rem;
         }
 
         .service-selector button.active {
-            background: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(102,126,234,0.3);
         }
 
+        /* Section Titles */
+        .section-title {
+            text-align: center;
+            margin: 40px 0 30px;
+        }
+
+        .section-title h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-title p {
+            color: #666;
+            margin-top: 8px;
+        }
+
+        /* Package Grid */
         .packages {
             display: none;
         }
 
         .packages.active {
             display: block;
+            animation: fadeInUp 0.5s ease;
         }
 
-        .packages h2 {
-            text-align: center;
-            margin: 20px 0;
-            color: #333;
-            font-size: 1.5rem;
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .package-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 12px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
         }
 
         .package {
             background: white;
-            border-radius: 12px;
-            padding: 16px;
+            border-radius: 24px;
+            padding: 24px;
             text-align: center;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            border: 2px solid #e0e0e0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(102,126,234,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .package::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .package:hover::before {
+            transform: scaleX(1);
+        }
+
+        .package:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(102,126,234,0.15);
         }
 
         .package.selected {
-            border-color: #667eea;
-            background: #f0f2ff;
+            border: 2px solid #667eea;
+            background: linear-gradient(135deg, rgba(102,126,234,0.05), rgba(118,75,162,0.05));
+            transform: translateY(-5px);
+        }
+
+        .package-icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
         }
 
         .package h3 {
-            font-size: 1.1rem;
-            margin-bottom: 6px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #1a1a2e;
         }
 
-        .package p {
-            font-size: 1rem;
-            font-weight: bold;
+        .package .price {
+            font-size: 1.8rem;
+            font-weight: 800;
             color: #667eea;
+            margin: 16px 0;
+        }
+
+        .package .price small {
+            font-size: 0.9rem;
+            font-weight: 400;
+        }
+
+        .package .features {
+            list-style: none;
+            margin: 16px 0;
+        }
+
+        .package .features li {
+            padding: 6px 0;
+            color: #666;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .package .features li i {
+            color: #28a745;
+            font-size: 0.8rem;
         }
 
         .package button {
-            margin-top: 10px;
-            padding: 6px 16px;
-            background: #667eea;
+            margin-top: 16px;
+            padding: 12px 28px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 40px;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            width: 100%;
         }
 
+        .package button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(102,126,234,0.4);
+        }
+
+        /* Order Form */
         .order-form {
             background: white;
-            border-radius: 16px;
-            padding: 20px;
-            margin: 20px 0 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-radius: 32px;
+            padding: 32px;
+            margin: 30px 0 50px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+            border: 1px solid rgba(102,126,234,0.1);
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .order-form h2 {
-            margin-bottom: 16px;
-            font-size: 1.3rem;
+            font-size: 1.6rem;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
         }
 
         .form-group {
-            margin-bottom: 16px;
+            margin-bottom: 20px;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .form-group label i {
+            margin-right: 8px;
+            color: #667eea;
         }
 
         .form-group input {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 16px;
             font-size: 1rem;
             font-family: inherit;
+            transition: all 0.3s;
         }
 
-        .payment-instructions {
-            background: #f8f9fa;
-            padding: 16px;
-            border-radius: 12px;
-            margin: 16px 0;
-            border-left: 4px solid #28a745;
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
         }
 
-        .payment-instructions h3 {
-            margin-bottom: 10px;
-            color: #28a745;
-            font-size: 1.1rem;
+        .package-summary {
+            background: linear-gradient(135deg, #f8f9ff, #f0f2ff);
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
         }
 
-        .payment-instructions p {
-            margin: 6px 0;
-            font-size: 0.95rem;
+        .package-summary .selected-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
         }
 
-        .bank-details {
-            background: #fff3cd;
-            padding: 12px;
-            border-radius: 8px;
-            margin: 10px 0;
+        .package-summary .selected-info i {
+            font-size: 2rem;
+        }
+
+        .package-summary .amount {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #667eea;
         }
 
         .submit-btn {
             width: 100%;
-            padding: 14px;
-            background: #28a745;
+            padding: 18px;
+            background: linear-gradient(135deg, #28a745, #20c997);
             color: white;
             border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: bold;
+            border-radius: 60px;
+            font-size: 1.1rem;
+            font-weight: 700;
             cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
         }
 
-        footer {
-            background: #1a1a1a;
-            color: white;
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(40,167,69,0.3);
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            transform: none;
+            cursor: not-allowed;
+        }
+
+        /* Loading */
+        .loading {
+            display: none;
             text-align: center;
-            padding: 20px 0;
-            margin-top: 20px;
+            padding: 40px;
+            background: linear-gradient(135deg, #fff3cd, #ffeeba);
+            border-radius: 24px;
+            margin: 20px 0;
         }
 
-        footer p {
-            margin: 5px 0;
+        .loading.active {
+            display: block;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.9; }
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Result Messages */
+        .result {
+            display: none;
+            padding: 20px;
+            border-radius: 20px;
+            margin: 20px 0;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result.success {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .result.success i {
+            font-size: 2rem;
+        }
+
+        .result.error {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .result.error i {
+            font-size: 2rem;
+        }
+
+        /* Features Section */
+        .features-section {
+            background: white;
+            border-radius: 32px;
+            padding: 48px 32px;
+            margin: 40px 0;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 32px;
+            margin-top: 32px;
+        }
+
+        .feature-card {
+            text-align: center;
+        }
+
+        .feature-card i {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
+        }
+
+        .feature-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .feature-card p {
+            color: #666;
             font-size: 0.85rem;
         }
 
-        .admin-link {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #667eea;
+        /* Testimonials */
+        .testimonials {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 32px;
+            padding: 48px 32px;
+            margin: 40px 0;
             color: white;
-            padding: 8px 16px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        .testimonials h3 {
+            font-size: 1.8rem;
+            margin-bottom: 32px;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+
+        .testimonial-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 24px;
+            border-radius: 20px;
+            text-align: left;
+        }
+
+        .testimonial-card i {
+            font-size: 2rem;
+            opacity: 0.5;
+            margin-bottom: 12px;
+        }
+
+        .testimonial-card p {
+            font-style: italic;
+            margin-bottom: 16px;
+        }
+
+        .testimonial-card .customer {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .testimonial-card .customer .avatar {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-weight: bold;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
 
-        .success-msg {
-            background: #d4edda;
-            color: #155724;
-            padding: 12px;
-            border-radius: 8px;
-            margin: 10px 0;
-            display: none;
+        /* Footer */
+        footer {
+            background: #1a1a2e;
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 60px;
+            border-radius: 40px 40px 0 0;
         }
 
-        @media (max-width: 600px) {
-            .package-grid {
-                grid-template-columns: repeat(2, 1fr);
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-logo h3 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 16px;
+        }
+
+        .social-links a {
+            color: white;
+            background: rgba(255,255,255,0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: #667eea;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 30px;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        /* Admin Button */
+        .admin-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            z-index: 100;
+        }
+
+        .admin-btn:hover {
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            .package-summary {
+                flex-direction: column;
+                text-align: center;
             }
             header h1 {
-                font-size: 1.4rem;
+                font-size: 1.8rem;
+            }
+            .container {
+                padding: 0 16px;
             }
         }
     </style>
 </head>
 <body>
 
+<div class="bg-animation"></div>
+
 <header>
     <div class="container">
-        <h1>📡 SIGNAL STRENGTH INC</h1>
-        <p>Your Trusted DStv & GOtv Reseller</p>
+        <div class="logo">
+            <i class="fas fa-signal"></i> <i class="fas fa-tv"></i>
+        </div>
+        <h1>SIGNAL STRENGTH INC</h1>
+        <p>Nigeria's #1 Trusted DStv & GOtv Instant Renewal Platform</p>
+        <div class="trust-badge">
+            <span><i class="fas fa-bolt"></i> Instant Delivery</span>
+            <span><i class="fas fa-lock"></i> Secure Payment</span>
+            <span><i class="fas fa-headset"></i> 24/7 Support</span>
+        </div>
     </div>
 </header>
 
 <main class="container">
     <div class="service-selector">
-        <button id="dstvBtn" class="active">📺 DStv</button>
-        <button id="gotvBtn">📡 GOtv</button>
+        <button id="dstvBtn" class="active">
+            <i class="fas fa-satellite-dish"></i> DStv
+        </button>
+        <button id="gotvBtn">
+            <i class="fas fa-tv"></i> GOtv
+        </button>
     </div>
 
     <!-- DStv Packages -->
     <div id="dstvPackages" class="packages active">
-        <h2>DStv Packages</h2>
+        <div class="section-title">
+            <h2><i class="fas fa-star"></i> Premium Entertainment</h2>
+            <p>Choose your perfect DStv package</p>
+        </div>
         <div class="package-grid">
             <div class="package" data-service="dstv" data-code="PREM" data-price="37000" data-name="Premium">
+                <div class="package-icon"><i class="fas fa-crown"></i></div>
                 <h3>Premium</h3>
-                <p>₦37,000</p>
-                <button>Select</button>
+                <div class="price">₦37,000 <small>/month</small></div>
+                <ul class="features">
+                    <li><i class="fas fa-check"></i> 200+ Channels</li>
+                    <li><i class="fas fa-check"></i> All Sports & Movies</li>
+                    <li><i class="fas fa-check"></i> 4K Ultra HD</li>
+                </ul>
+                <button>Select Package <i class="fas fa-arrow-right"></i></button>
             </div>
             <div class="package" data-service="dstv" data-code="COMP" data-price="29500" data-name="Compact Plus">
+                <div class="package-icon"><i class="fas fa-gem"></i></div>
                 <h3>Compact Plus</h3>
-                <p>₦29,500</p>
-                <button>Select</button>
+                <div class="price">₦29,500 <small>/month</small></div>
+                <ul class="features">
+                    <li><i class="fas fa-check"></i> 160+ Channels</li>
+                    <li><i class="fas fa-check"></i> Premium Sports</li>
+                    <li><i class="fas fa-check"></i> HD Quality</li>
+                </ul>
+                <button>Select Package <i class="fas fa-arrow-right"></i></button>
             </div>
             <div class="package" data-service="dstv" data-code="CMPT" data-price="19500" data-name="Compact">
+                <div class="package-icon"><i class="fas fa-film"></i></div>
                 <h3>Compact</h3>
-                <p>₦19,500</p>
-                <button>Select</button>
+                <div class="price">₦19,500 <small>/month</small></div>
+                <ul class="features">
+                    <li><i class="fas fa-check"></i> 120+ Channels</li>
+                    <li><i class="fas fa-check"></i> Entertainment & News</li>
+                    <li><i class="fas fa-check"></i> Best Value</li>
+                </ul>
+                <button>Select Package <i class="fas fa-arrow-right"></i></button>
             </div>
             <div class="package" data-service="dstv" data-code="FAM" data-price="11500" data-name="Family">
+                <div class="package-icon"><i class="fas fa-users"></i></div>
                 <h3>Family</h3>
-                <p>₦11,500</p>
-                <button>Select</button>
+                <div class="price">₦11,500 <small>/month</small></div>
+                <ul class="features">
+                    <li><i class="fas fa-check"></i> 90+ Channels</li>
+                    <li><i class="fas fa-check"></i> Family Content</li>
+                    <li><i class="fas fa-check"></i> Kids Channels</li>
+                </ul>
+                <button>Select Package <i class="fas fa-arrow-right"></i></button>
             </div>
             <div class="package" data-service="dstv" data-code="LITE" data-price="6500" data-name="Lite">
+                <div class="package-icon"><i class="fas fa-lightbulb"></i></div>
                 <h3>Lite</h3>
-                <p>₦6,500</p>
-                <button>Select</button>
+                <div class="price">₦6,500 <small>/month</small></div>
+                <ul class="features">
+                    <li><i class="fas fa-check"></i> 50+ Channels</li>
+                    <li><i class="fas fa-check"></i> Basic Entertainment</li>
+                    <li><i class="fas fa-check"></i> Affordable</li>
+                </ul>
+                <button>Select Package <i class="fas fa-arrow-right"></i></button>
             </div>
             <div class="package" data-service="dstv" data-code="YDVB" data-price="4500" data-name="Yanga">
+                <div class="package-icon"><i class="fas fa-fire"></i></div>
                 <h3>Yanga</h3>
-                <p>₦4,500</p>
-                <button>Select</button>
+                <div class="price">₦4,500 <small>/month</small></div>
+                <ul class="features">
+                    <li><i class="fas fa-check"></i> 30+ Channels</li>
+                    <li><i class="fas fa-check"></i> Popular Local</li>
+                    <li><i class="fas fa-check"></i> Best Budget</li>
+                </ul>
+                <button>Select Package <i class="fas fa-arrow-right"></i></button>
             </div>
         </div>
     </div>
 
     <!-- GOtv Packages -->
     <div id="gotvPackages" class="packages">
-        <h2>GOtv Packages</h2>
+        <div class="section-title">
+            <h2><i class="fas fa-heart"></i> Family Entertainment</h2>
+            <p>Affordable GOtv packages for everyone</p>
+        </div>
         <div class="package-grid">
             <div class="package" data-service="gotv" data-code="SUP" data-price="18500" data-name="Super+">
+                <div class="package-icon"><i class="fas fa-star-of-life"></i></div>
                 <h3>Super+</h3>
-                <p>₦18,500</p>
-                <button>Select</button>
+                <div class="price">₦18,500 <small>/month</small></div>
+                <ul class="features">
+                    <li><i class="fas fa-check"></i> 70+ Channels</li>
+                    <li><i class="fas fa-check"></i> Premium Sports</li>
+                    <li><i class="fas fa-check"></i> Movies & Series</li>
+                </ul>
+                <button>Select Package <i class="fas fa-arrow-right"></i></button>
             </div>
             <div class="package" data-service="gotv" data-code="MAX" data-price="13200" data-name="Max">
+                <div class="package-icon"><i class="fas fa-chart-line"></i></div>
                 <h3>Max</h3>
-                <p>₦13,200</p>
-                <button>Select</button>
+                <div class="price">₦13,200 <small>/month</small></div>
+                <ul class="features">
+                    <li><i class="fas fa-check"></i> 60+ Channels</li>
+                    <li><i class="fas fa-check"></i> Entertainment</li>
+                    <li><i class="fas fa-check"></i> News & Lifestyle</li>
+                </ul>
+                <button>Select Package <i class="fas fa-arrow-right"></i></button>
             </div>
             <div class="package" data-service="gotv" data-code="JIN" data-price="8400" data-name="Jinja">
+                <div class="package-icon"><i class="fas fa-smile"></i></div>
                 <h3>Jinja</h3>
-                <p>₦8,400</p>
-                <button>Select</button>
+                <div class="price">₦8,400 <small>/month</small></div>
+                <ul class="features">
+                    <li><i class="fas fa-check"></i> 40+ Channels</li>
+                    <li><i class="fas fa-check"></i> Family Favorite</li>
+                    <li><i class="fas fa-check"></i> Kids Content</li>
+                </ul>
+                <button>Select Package <i class="fas fa-arrow-right"></i></button>
             </div>
             <div class="package" data-service="gotv" data-code="SML" data-price="5100" data-name="Smallie">
+                <div class="package-icon"><i class="fas fa-seedling"></i></div>
                 <h3>Smallie</h3>
-                <p>₦5,100</p>
-                <button>Select</button>
+                <div class="price">₦5,100 <small>/month</small></div>
+                <ul class="features">
+                    <li><i class="fas fa-check"></i> 25+ Channels</li>
+                    <li><i class="fas fa-check"></i> Basic Entertainment</li>
+                    <li><i class="fas fa-check"></i> Great Starter</li>
+                </ul>
+                <button>Select Package <i class="fas fa-arrow-right"></i></button>
             </div>
         </div>
     </div>
 
     <!-- Order Form -->
     <div class="order-form" id="orderForm" style="display: none;">
-        <h2>📝 Complete Your Order</h2>
-        <div class="success-msg" id="successMsg"></div>
+        <h2><i class="fas fa-clipboard-list"></i> Complete Your Order</h2>
+        <div id="result" class="result"></div>
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p><i class="fas fa-spinner fa-pulse"></i> Processing your payment...</p>
+            <p style="font-size: 12px; margin-top: 10px;">Please don't close this page</p>
+        </div>
+        
+        <div class="package-summary" id="packageSummary"></div>
+        
         <form id="paymentForm">
-            <div class="form-group">
-                <label>Selected Package:</label>
-                <input type="text" id="selectedPackage" readonly style="background:#f5f5f5;">
-            </div>
-            <div class="form-group">
-                <label>Amount (₦):</label>
-                <input type="text" id="amount" readonly style="background:#f5f5f5;">
-            </div>
-            <div class="form-group">
-                <label for="smartcard">Smartcard/IUC Number:</label>
-                <input type="text" id="smartcard" required placeholder="e.g., 1234567890">
-            </div>
-            <div class="form-group">
-                <label for="phone">Phone Number:</label>
-                <input type="tel" id="phone" required placeholder="0803 123 4567">
-            </div>
-            <div class="form-group">
-                <label for="email">Email (optional):</label>
-                <input type="email" id="email" placeholder="you@example.com">
-            </div>
-            <div class="payment-instructions">
-                <h3>💳 Payment Instructions</h3>
-                <div class="bank-details">
-                    <p><strong>Send payment to:</strong></p>
-                    <p>🏦 Bank: <strong>OPAY</strong><br>
-                    📛 Account Name: <strong>Olowookere David Ayomide</strong><br>
-                    🔢 Account Number: <strong>7079197823</strong></p>
+            <div class="form-grid">
+                <div class="form-group full-width">
+                    <label><i class="fas fa-id-card"></i> Smartcard/IUC Number</label>
+                    <input type="text" id="smartcard" required placeholder="Enter your 10-11 digit smartcard number">
                 </div>
-                <p>💰 <strong>Amount to pay:</strong> <span id="payAmount">₦0</span></p>
-                <p>✅ After payment, click <strong>Submit Order</strong> below.</p>
-                <p>📱 You'll receive a WhatsApp confirmation immediately.</p>
+                <div class="form-group">
+                    <label><i class="fas fa-phone-alt"></i> Phone Number</label>
+                    <input type="tel" id="phone" required placeholder="0803 123 4567">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-envelope"></i> Email Address</label>
+                    <input type="email" id="email" required placeholder="you@example.com">
+                </div>
             </div>
-            <button type="submit" class="submit-btn">📝 Submit Order</button>
+            <button type="submit" class="submit-btn" id="submitBtn">
+                <i class="fas fa-credit-card"></i> Pay & Renew Instantly
+                <i class="fas fa-bolt"></i>
+            </button>
         </form>
+        <p style="text-align: center; margin-top: 20px; font-size: 12px; color: #888;">
+            <i class="fas fa-lock"></i> Secure payment powered by Paystack
+        </p>
+    </div>
+
+    <!-- Features Section -->
+    <div class="features-section">
+        <h3>Why Choose Signal Strength Inc?</h3>
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fas fa-bolt"></i>
+                <h4>Instant Renewal</h4>
+                <p>Get your decoder renewed in seconds after payment</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-shield-alt"></i>
+                <h4>100% Secure</h4>
+                <p>Paystack secured payments with fraud protection</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-clock"></i>
+                <h4>24/7 Support</h4>
+                <p>Our team is always ready to help you</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-percent"></i>
+                <h4>Best Prices</h4>
+                <p>Competitive rates with no hidden charges</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="testimonials">
+        <h3><i class="fas fa-quote-left"></i> What Our Customers Say</h3>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <i class="fas fa-quote-right"></i>
+                <p>"Best platform ever! My DStv was renewed in less than 30 seconds. Highly recommended!"</p>
+                <div class="customer">
+                    <div class="avatar">JO</div>
+                    <div><strong>John O.</strong><br>Lagos</div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <i class="fas fa-quote-right"></i>
+                <p>"So convenient. No need to leave my house anymore. Signal Strength Inc is a lifesaver!"</p>
+                <div class="customer">
+                    <div class="avatar">AA</div>
+                    <div><strong>Amara A.</strong><br>Abuja</div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <i class="fas fa-quote-right"></i>
+                <p>"Very reliable and fast customer service. I've been using them for 6 months now."</p>
+                <div class="customer">
+                    <div class="avatar">MC</div>
+                    <div><strong>Michael C.</strong><br>Port Harcourt</div>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
 
 <footer>
     <div class="container">
-        <p>© 2024 Signal Strength Inc - Fast & Reliable DStv/GOtv Renewals</p>
-        <p>📞 Contact: <strong>07079197823</strong> | 💬 WhatsApp: <strong>07079197823</strong></p>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <h3><i class="fas fa-signal"></i> SIGNAL STRENGTH INC</h3>
+                <p>Your Trusted DStv & GOtv Partner</p>
+            </div>
+            <div class="footer-links">
+                <a href="#">About Us</a>
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Contact</a>
+            </div>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2024 Signal Strength Inc. All rights reserved. | 📞 Support: 07079197823 | 💬 WhatsApp: 07079197823</p>
+        </div>
     </div>
 </footer>
 
-<a href="#" class="admin-link" id="adminLink">🔐 Admin</a>
+<a href="#" class="admin-btn" id="adminLink">
+    <i class="fas fa-lock"></i>
+</a>
 
 <script>
-    // ========== YOUR DETAILS - ALREADY CONFIGURED ==========
-    const YOUR_WHATSAPP_NUMBER = '2347079197823';  // Your WhatsApp number
-    const ADMIN_PASSWORD = 'signal123';            // Change this password after deployment
-    // =======================================================
+    // ========== CONFIGURATION ==========
+    const API_URL = 'https://signal-strength-api.onrender.com'; // CHANGE AFTER BACKEND DEPLOYMENT
+    const ADMIN_PASSWORD = 'signal123';
+    // ===================================
 
     let selectedPackage = null;
 
     // Package selection
     document.querySelectorAll('.package').forEach(pkg => {
-        pkg.addEventListener('click', (e) => {
-            if(e.target.tagName === 'BUTTON') {
-                e.stopPropagation();
-            }
+        const selectHandler = () => {
             document.querySelectorAll('.package').forEach(p => p.classList.remove('selected'));
             pkg.classList.add('selected');
             selectedPackage = {
@@ -388,33 +1036,31 @@
                 code: pkg.dataset.code
             };
             
-            // Show order form
             document.getElementById('orderForm').style.display = 'block';
-            document.getElementById('selectedPackage').value = `${selectedPackage.service.toUpperCase()} - ${selectedPackage.name}`;
-            document.getElementById('amount').value = `₦${parseInt(selectedPackage.price).toLocaleString()}`;
-            document.getElementById('payAmount').innerText = `₦${parseInt(selectedPackage.price).toLocaleString()}`;
+            document.getElementById('result').className = 'result';
+            document.getElementById('result').innerHTML = '';
             
-            // Scroll to form
+            // Update package summary
+            const summaryHtml = `
+                <div class="selected-info">
+                    <i class="fas ${selectedPackage.service === 'dstv' ? 'fa-satellite-dish' : 'fa-tv'}"></i>
+                    <div>
+                        <strong>${selectedPackage.service.toUpperCase()} - ${selectedPackage.name}</strong>
+                        <br>
+                        <small>Smartcard: Will be entered below</small>
+                    </div>
+                </div>
+                <div class="amount">₦${parseInt(selectedPackage.price).toLocaleString()}</div>
+            `;
+            document.getElementById('packageSummary').innerHTML = summaryHtml;
+            
             document.getElementById('orderForm').scrollIntoView({ behavior: 'smooth' });
-        });
+        };
         
+        pkg.addEventListener('click', selectHandler);
         pkg.querySelector('button').addEventListener('click', (e) => {
             e.stopPropagation();
-            document.querySelectorAll('.package').forEach(p => p.classList.remove('selected'));
-            pkg.classList.add('selected');
-            selectedPackage = {
-                name: pkg.dataset.name,
-                price: pkg.dataset.price,
-                service: pkg.dataset.service,
-                code: pkg.dataset.code
-            };
-            
-            document.getElementById('orderForm').style.display = 'block';
-            document.getElementById('selectedPackage').value = `${selectedPackage.service.toUpperCase()} - ${selectedPackage.name}`;
-            document.getElementById('amount').value = `₦${parseInt(selectedPackage.price).toLocaleString()}`;
-            document.getElementById('payAmount').innerText = `₦${parseInt(selectedPackage.price).toLocaleString()}`;
-            
-            document.getElementById('orderForm').scrollIntoView({ behavior: 'smooth' });
+            selectHandler();
         });
     });
 
@@ -454,67 +1100,54 @@
             alert('Please enter a valid smartcard/IUC number (10-11 digits)');
             return;
         }
-        
         if(!phone || phone.length < 10) {
             alert('Please enter a valid phone number');
             return;
         }
+        if(!email) {
+            alert('Please enter your email address');
+            return;
+        }
         
-        // Create order
-        const orderId = 'ORD-' + Date.now();
-        const order = {
-            id: orderId,
-            date: new Date().toLocaleString(),
-            service: selectedPackage.service,
-            package: selectedPackage.name,
-            code: selectedPackage.code,
-            smartcard: smartcard,
-            amount: selectedPackage.price,
-            phone: phone,
-            email: email,
-            status: 'pending'
-        };
+        document.getElementById('submitBtn').disabled = true;
+        document.getElementById('loading').classList.add('active');
         
-        // Save to localStorage
-        let orders = JSON.parse(localStorage.getItem('signalStrengthOrders') || '[]');
-        orders.unshift(order);
-        localStorage.setItem('signalStrengthOrders', JSON.stringify(orders));
-        
-        // Send WhatsApp message to YOU
-        const msg = `*NEW ORDER - SIGNAL STRENGTH INC*%0A%0A` +
-            `🆔 Order ID: ${orderId}%0A` +
-            `📅 Date: ${order.date}%0A` +
-            `📺 Service: ${order.service.toUpperCase()}%0A` +
-            `📦 Package: ${order.package}%0A` +
-            `🔢 Smartcard: ${order.smartcard}%0A` +
-            `💰 Amount: ₦${parseInt(order.amount).toLocaleString()}%0A` +
-            `📞 Customer Phone: ${order.phone}%0A` +
-            `📧 Customer Email: ${order.email || 'Not provided'}%0A%0A` +
-            `✅ CUSTOMER WILL PAY TO YOUR OPAY ACCOUNT (Olowookere David Ayomide - 7079197823)%0A%0A` +
-            `🔐 To mark as paid, go to Admin panel (tap purple button bottom right)%0A` +
-            `🔗 Admin: ${window.location.href.split('?')[0]}?admin=1`;
-        
-        // Open WhatsApp to YOU
-        window.open(`https://wa.me/${YOUR_WHATSAPP_NUMBER}?text=${msg}`, '_blank');
-        
-        // Show success message
-        document.getElementById('successMsg').style.display = 'block';
-        document.getElementById('successMsg').innerHTML = `✅ Order placed successfully!<br><br>🆔 Order ID: ${orderId}<br>💰 Amount: ₦${parseInt(order.amount).toLocaleString()}<br><br>📌 Please send payment to:<br><strong>OPAY - Olowookere David Ayomide - 7079197823</strong><br><br>After payment, you will receive confirmation on WhatsApp.`;
-        
-        // Reset form after delay
-        setTimeout(() => {
-            document.getElementById('smartcard').value = '';
-            document.getElementById('phone').value = '';
-            document.getElementById('email').value = '';
-            document.getElementById('orderForm').style.display = 'none';
-            document.querySelectorAll('.package').forEach(p => p.classList.remove('selected'));
-            selectedPackage = null;
-            document.getElementById('successMsg').style.display = 'none';
-        }, 5000);
-        
-        alert(`✅ Order placed!\n\nOrder ID: ${orderId}\nAmount: ₦${parseInt(order.amount).toLocaleString()}\n\nSend payment to:\nOPAY - Olowookere David Ayomide - 7079197823\n\nYou'll get WhatsApp confirmation shortly.`);
+        try {
+            const response = await fetch(`${API_URL}/initiate-payment`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: email,
+                    amount: selectedPackage.price,
+                    smartcard: smartcard,
+                    service: selectedPackage.service,
+                    packageCode: selectedPackage.code,
+                    packageName: selectedPackage.name,
+                    phone: phone
+                })
+            });
+            
+            const data = await response.json();
+            
+            if(data.authorization_url) {
+                window.location.href = data.authorization_url;
+            } else {
+                throw new Error('Payment initiation failed');
+            }
+        } catch(error) {
+            document.getElementById('loading').classList.remove('active');
+            document.getElementById('submitBtn').disabled = false;
+            document.getElementById('result').className = 'result error';
+            document.getElementById('result').innerHTML = `
+                <i class="fas fa-exclamation-triangle"></i>
+                <div>
+                    <strong>Payment Error</strong><br>
+                    ${error.message}. Please try again or contact support.
+                </div>
+            `;
+        }
     });
-    
+
     // Admin panel
     function showAdmin() {
         const password = prompt('Enter admin password:');
@@ -523,60 +1156,17 @@
             return;
         }
         
-        const orders = JSON.parse(localStorage.getItem('signalStrengthOrders') || '[]');
-        if(orders.length === 0) {
-            alert('No orders yet');
-            return;
-        }
-        
-        let adminHtml = '<div style="position:fixed;top:0;left:0;right:0;bottom:0;background:white;z-index:9999;overflow:auto;padding:20px;">';
-        adminHtml += '<div style="max-width:1200px;margin:0 auto;">';
-        adminHtml += '<h2>📊 SIGNAL STRENGTH INC - ORDERS</h2>';
-        adminHtml += '<button onclick="location.reload()" style="padding:8px 16px;margin:10px 0;background:#667eea;color:white;border:none;border-radius:8px;">❌ Close Admin</button>';
-        adminHtml += '<div style="overflow-x:auto;">';
-        adminHtml += '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
-        adminHtml += '<tr style="background:#667eea;color:white;"><th style="padding:10px;">Order ID</th><th style="padding:10px;">Date</th><th style="padding:10px;">Service</th><th style="padding:10px;">Package</th><th style="padding:10px;">Smartcard</th><th style="padding:10px;">Amount</th><th style="padding:10px;">Customer Phone</th><th style="padding:10px;">Status</th><th style="padding:10px;">Action</th></tr>';
-        
-        orders.forEach((order, index) => {
-            adminHtml += `<tr style="border-bottom:1px solid #ddd;">
-                <td style="padding:10px;">${order.id}</td>
-                <td style="padding:10px;">${order.date}</td>
-                <td style="padding:10px;">${order.service.toUpperCase()}</td>
-                <td style="padding:10px;">${order.package}</td>
-                <td style="padding:10px;">${order.smartcard}</td>
-                <td style="padding:10px;">₦${parseInt(order.amount).toLocaleString()}</td>
-                <td style="padding:10px;">${order.phone}</td>
-                <td style="padding:10px;"><span style="background:${order.status === 'paid' ? '#28a745' : '#ffc107'};color:${order.status === 'paid' ? 'white' : 'black'};padding:4px 8px;border-radius:4px;">${order.status}</span></td>
-                <td style="padding:10px;">${order.status !== 'paid' ? `<button onclick="markPaid(${index})" style="background:#28a745;color:white;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;">✅ Mark as Paid</button>` : '✅ Completed'}</td>
-             </tr>`;
-        });
-        
-        adminHtml += '</table></div></div></div>';
-        
-        const overlay = document.createElement('div');
-        overlay.innerHTML = adminHtml;
-        document.body.appendChild(overlay);
-        
-        window.markPaid = function(index) {
-            let orders = JSON.parse(localStorage.getItem('signalStrengthOrders') || '[]');
-            orders[index].status = 'paid';
-            localStorage.setItem('signalStrengthOrders', JSON.stringify(orders));
-            alert(`✅ Order ${orders[index].id} marked as PAID!\n\nNow manually renew their decoder:\n${orders[index].service.toUpperCase()} - ${orders[index].package}\nSmartcard: ${orders[index].smartcard}\n\nAfter renewal, message customer on ${orders[index].phone}`);
-            location.reload();
-        };
+        window.open(`${API_URL}/admin`, '_blank');
     }
     
-    // Admin link click
     document.getElementById('adminLink').addEventListener('click', (e) => {
         e.preventDefault();
         showAdmin();
     });
-    
-    // Check for admin in URL
-    if(window.location.href.includes('admin=1')) {
-        showAdmin();
-    }
 </script>
+
+<!-- Paystack Script -->
+<script src="https://js.paystack.co/v1/inline.js"></script>
 
 </body>
 </html>
